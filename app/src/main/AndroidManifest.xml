@@ -35,6 +35,8 @@
         </activity>
 
         <activity android:name=".SettingsActivity" android:exported="false" />
+        <activity android:name=".CaptchaActivity" android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light" />
 
         <service
             android:name=".ProxyService"

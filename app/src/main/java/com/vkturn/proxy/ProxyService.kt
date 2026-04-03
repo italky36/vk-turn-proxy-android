@@ -177,7 +177,16 @@ class ProxyService : Service() {
                 val reader = BufferedReader(InputStreamReader(process?.inputStream))
                 var line: String?
                 while (reader.readLine().also { line = it } != null) {
-                    addLog(line ?: "")
+                    val l = line ?: ""
+                    addLog(l)
+                    if (l.startsWith("CAPTCHA_REQUIRED:")) {
+                        val url = l.removePrefix("CAPTCHA_REQUIRED:")
+                        val intent = Intent(this@ProxyService, CaptchaActivity::class.java).apply {
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            putExtra("captcha_url", url)
+                        }
+                        startActivity(intent)
+                    }
                 }
 
                 // Если процесс завершился, выводим код
